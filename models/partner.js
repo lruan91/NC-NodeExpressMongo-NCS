@@ -6,15 +6,15 @@ const partnerSchema = new Schema({
 		type: String,
 		required: true,
 		unique: true
-},
+  },
 	image: {
 		type: String,
 		required: true
-},
+  },
   featured: {
     type: Boolean,
     default: false
-},
+  },
   description: {
     type: String,
     required: true
