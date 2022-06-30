@@ -46,48 +46,50 @@ app.use(session({
 }));
 
 // Exercise: Basic Authentication
-function auth(req, res, next) {
-  console.log(req.session);
+// function auth(req, res, next) {
+//   console.log(req.session);
 
-    if(!req.session.user) {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      const err = new Error('You are not authenticated!');
-      res.setHeader('WWW-Authenticate', 'Basic');
-      err.status = 401;
-      return next(err);
-    }
+//     if(!req.session.user) {
+//     const authHeader = req.headers.authorization;
+//     if (!authHeader) {
+//       const err = new Error('You are not authenticated!');
+//       res.setHeader('WWW-Authenticate', 'Basic');
+//       err.status = 401;
+//       return next(err);
+//     }
 
-    const auth = Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
-    const user = auth[0];
-    const pass = auth[1];
-    if(user === 'admin' && pass === 'password') {
-      req.session.user = 'admin';
-      // res.cookie('user', 'admin', {signed: true});
-      return next(); //authorized
-    } else {
-      const err = new Error('You are not authenticated!');
-      res.setHeader('WWW-Authenticate', 'Basic');
-      err.status = 401;
-      return next(err);
-    }
-  } else {
-    if(req.session.user === 'admin') {
-      return next();
-    } else {
-      const err = new Error('You are not authenticated!');
-      err.status = 401;
-      return next(err);
-    }
-  }
-}
+//     const auth = Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
+//     const user = auth[0];
+//     const pass = auth[1];
+//     if(user === 'admin' && pass === 'password') {
+//       req.session.user = 'admin';
+//       // res.cookie('user', 'admin', {signed: true});
+//       return next(); //authorized
+//     } else {
+//       const err = new Error('You are not authenticated!');
+//       res.setHeader('WWW-Authenticate', 'Basic');
+//       err.status = 401;
+//       return next(err);
+//     }
+//   } else {
+//     if(req.session.user === 'admin') {
+//       return next();
+//     } else {
+//       const err = new Error('You are not authenticated!');
+//       err.status = 401;
+//       return next(err);
+//     }
+//   }
+// }
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 app.use(auth);
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-// Cookies and Sessions Part 2: NOT working in PostMan
+
+// Cookies and Sessions Part 2
 function auth(req, res, next) {
   console.log(req.session);
 
@@ -99,9 +101,9 @@ function auth(req, res, next) {
     if(req.session.user === 'authenticated') {
       return next();
     } else {
-      const err = new Error('You are not authenticated!');
-      err.status = 401;
-      return next(err);
+        const err = new Error('You are not authenticated!');
+        err.status = 401;
+        return next(err);
     }
   }
 }

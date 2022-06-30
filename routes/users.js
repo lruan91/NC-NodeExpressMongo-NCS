@@ -56,21 +56,21 @@ router.post('/login', (req, res, next) => {
         err.status = 401;
         return next(err);
       } else if(user.password !== password) {
-        const err = new Error('Your password is incorrect!');
-        err.status = 401;
-        return next(err);
+          const err = new Error('Your password is incorrect!');
+          err.status = 401;
+          return next(err);
       } else if(user.username === username && user.password === password) {
-        req.session.user = 'authenticated';
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/plain');
-        res.end('You are authenticated!')
+          req.session.user = 'authenticated';
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'text/plain');
+          res.end('You are authenticated!')
       }
     })
     .catch(err => next(err));
   } else {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('You are already authenticated!');
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'text/plain');
+      res.end('You are already authenticated!');
   }
 });
 
