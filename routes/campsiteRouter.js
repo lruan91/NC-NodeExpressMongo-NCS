@@ -5,11 +5,6 @@ const authenticate = require('../authenticate');
 const campsiteRouter = express.Router();
 
 campsiteRouter.route('/')
-// .all((req, res, next) => {
-//   res.statusCode = 200;
-//   res.setHeader('Content-Type', 'text/plain');
-//   next();
-// })
 .get((req, res, next) => {
   Campsite.find()
   .populate('comments.author')
@@ -19,7 +14,6 @@ campsiteRouter.route('/')
     res.json(campsites);
   })
   .catch(err => next(err))
-  // res.end('Will send all the campsites to you');
 })
 .post(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
   Campsite.create(req.body)
@@ -28,7 +22,6 @@ campsiteRouter.route('/')
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
       res.json(campsite);
-  // res.end(`Will add the campsite: ${req.body.name} with description: ${req.body.description}`);
 })
 .catch(err => next(err));
 })
@@ -42,18 +35,12 @@ campsiteRouter.route('/')
       res.statusCode = 200;
       res.setHeader('Content-Type', 'application/json');
       res.json(response);
-  // res.end('Deleting all campsites');
     })
     .catch(err => next(err));
 });
 
 // Week 1 Task 1: added a campsiteRouter with GET/POST/PUT/DELETE
 campsiteRouter.route('/:campsiteId')
-// .all((req, res, next) => {
-//   res.statusCode = 200;
-//   res.setHeader('Content-Type', 'text/plain');
-//   next();
-// })
 .get((req, res, next) => {
   Campsite.findById(req.params.campsiteId)
   .populate('comments.author')
@@ -79,9 +66,6 @@ campsiteRouter.route('/:campsiteId')
       res.json(campsite);
   })
   .catch(err => next(err));
-  // res.write(`Updating the campsite: ${req.params.campsiteId}\n`);
-  // res.end(`Will update the campsite: ${req.body.name}
-  //   with description: ${req.body.description}`);
 })
 .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
   Campsite.findByIdAndDelete(req.params.campsiteId)
@@ -91,7 +75,6 @@ campsiteRouter.route('/:campsiteId')
       res.json(response);
     })
     .catch(err => next(err));
-  // res.end(`Deleting campsite: ${req.params.campsiteId}`);
 });
 
 // Exercise REST API Part 2
