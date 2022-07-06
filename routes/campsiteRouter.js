@@ -50,7 +50,6 @@ campsiteRouter.route('/:campsiteId')
       res.json(campsite);
   })
   .catch(err => next(err));
-  // res.end(`Will send details of the campsite: ${req.params.campsiteId} to you`)
 })
 .post(authenticate.verifyUser, (req, res) => {
   res.statusCode = 403;
