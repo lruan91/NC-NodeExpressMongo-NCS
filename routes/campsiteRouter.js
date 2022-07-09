@@ -154,9 +154,9 @@ campsiteRouter.route('/:campsiteId/comments/:commentId')
   .populate('comments.author')
   .then(campsite => {
     if(campsite && campsite.comments.id(req.params.commentId)) {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.json(campsite.comments.id(req.params.commentId));
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.json(campsite.comments.id(req.params.commentId));
     } else if(!campsite) {
         err = new Error(`Campsite ${req.params.campsiteId} not found`);
         err.status = 404;
